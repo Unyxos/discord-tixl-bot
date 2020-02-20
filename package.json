@@ -1,0 +1,21 @@
+{
+  "name": "tixl-discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.corentincloss.fr/projets/tixl-discord-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^5.6.2",
+    "axios": "^0.19.0",
+    "discord.js": "^11.5.1",
+    "get-json": "^1.0.1"
+  }
+}
