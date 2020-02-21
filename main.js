@@ -7,14 +7,19 @@ const getJSON = require('get-json');
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
-client.user.setPresence({ game: { name: 'Commit ' + process.env.COMMIT_ID }});
-
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
  */
 client.on('ready', () => {
     console.log('I am ready!');
+    client.user.setStatus('online');
+    client.user.setPresence({
+        game: {
+            name: 'Running ' + process.env.COMMIT_ID,
+            type: "Playing",
+        }
+    });
 });
 
 // Create an event listener for messages
