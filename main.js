@@ -7,6 +7,8 @@ const getJSON = require('get-json');
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
+client.user.setPresence({ game: { name: 'Commit ' + process.env.COMMIT_ID }});
+
 /**
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
@@ -24,13 +26,12 @@ client.on('message', message => {
                     let usdPrice = response2[0]['lastPrice']
                     let lastPrice = roundToTwo(response[0]['lastPrice'])
                     let priceChangePercentage = response[0]['priceChangePercent'];
-                    let priceChange = response[0]['priceChange'];
                     let high = roundToTwo(response[0]['highPrice']);
                     let low = roundToTwo(response[0]['lowPrice']);
                     let volume = roundToTwo(response[0]['quoteVolume']);
                     let changeArray = priceChangePercentage.split('');
                     let changeEmoji;
-                    if (changeArray[0] == '-'){
+                    if (changeArray[0] === '-'){
                         changeEmoji = "📉";
                     } else {
                         changeEmoji = "📈";
