@@ -1,0 +1,33 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  only:
+    - master
+  image: docker:latest
+  services:
+    - docker:dind
+
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+  script:
+    - docker build -t registry.corentincloss.fr/tixl/discord-tixl-bot:latest -t registry.corentincloss.fr/tixl/discord-tixl-bot:$CI_COMMIT_SHORT_SHA .
+    - docker push registry.corentincloss.fr/tixl/discord-tixl-bot
+  tags:
+    - docker-runner
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker stop discord-tixl-bot
+    - docker rm discord-tixl-bot
+    - docker run -d --restart always --name discord-tixl-bot -e DISCORD_TOKEN=$DISCORD_TOKEN -e SENTRY_DSN=$SENTRY_DSN registry.corentincloss.fr/tixl/discord-tixl-bot:$CI_COMMIT_SHORT_SHA
+  tags:
+    - docker-shell
