@@ -27,7 +27,7 @@ client.on('message', message => {
     if (message.content === '!price' || message.content === '!Price') {
         if (message.channel["name"] === "bot-dev" || message.channel["name"] === "price-discussion") {
             getJSON('https://dex.binance.org/api/v1/ticker/24hr?symbol=MTXLT-286_BNB', function(error, response){
-                getJSON('https://dex.binance.org/api/v1/ticker/24hr?symbol=BNB_USDSB-1AC', function (error, response2) {
+                getJSON('https://dex.binance.org/api/v1/ticker/24hr?symbol=BNB_BUSD-BD1', function (error, response2) {
                     let usdPrice = response2[0]['lastPrice'];
                     let lastPrice = roundToTwo(response[0]['lastPrice']);
                     let priceChangePercentage = response[0]['priceChangePercent'];
