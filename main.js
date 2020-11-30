@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const logger = require('pino')()
 const client = new Discord.Client();
 const fs = require('fs');
-const {bep2, bep20, erc20, native} = require('./chains/global');
+require('./chains/native');
 require('dotenv').config()
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -44,11 +44,5 @@ client.on('message', function (message) {
 
 })
 
-module.exports = {
-    logger,
-    priceChannelId: process.env.PRICE_CHANNEL_ID,
-    bep2,
-    bep20,
-    erc20,
-    native,
-}
+module.exports.logger = logger;
+module.exports.priceChannelId = process.env.PRICE_CHANNEL_ID;
