@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { ChainId, Token, WETH, Fetcher } = require('@uniswap/sdk');
+const { ChainId, Token, WETH, Fetcher, Trade, Route, TokenAmount, TradeType } = require('@uniswap/sdk');
 const contractAddress = '0x8eEF5a82E6Aa222a60F009ac18c24EE12dBf4b41';
 
 const exchanges = [
@@ -12,7 +12,9 @@ const TXL = new Token(ChainId.MAINNET, contractAddress, 18)
 
 async function getUniswapV2Price() {
     try {
-        return await Fetcher.fetchPairData(TXL, WETH[TXL.chainId]);
+        const pair = await Fetcher.fetchPairData(TXL, WETH[TXL.chainId]);
+        const route = new Route([pair], WETH[TXL.chainId])
+        const trade = new Trade(route, new TokenAmount(WETH[TXL.chainId], '1000000000000000000'), TradeType.EXACT_INPUT)
     } catch (err) {
         return err;
     }
