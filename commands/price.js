@@ -27,12 +27,28 @@ module.exports = {
     args: false,
     usage: '',
     async execute (message, args) {
+        if (message.channel.id !== app.priceChannelId) return message.delete().catch(err => app.logger.error(err));
         const erc20data = await erc20.getPrice;
-        let embedText = `Price for TXL (ERC20):\n`;
-        embedText += `**USD**: $${erc20data.market.price.usd.toFixed(3)}\n`;
+        let embedText = '';
+        embedText += `**USD**: $${erc20data.market.price.usd.toFixed(3)} (24h change : ${erc20data.market.priceChangePercentage.toFixed(2)}%)\n`;
         embedText += `**BTC**: ${erc20data.market.price.btc}\n`;
         embedText += `**ETH**: ${erc20data.market.price.eth}\n`;
+        embedText += `**Volume**: $${new Intl.NumberFormat().format(erc20data.market.volume.usd)}\n`;
         embedText += `**Market Cap**: $${new Intl.NumberFormat().format(erc20data.market.mcap.usd)}\n\n`;
-        console.log(embedText);
+        embedText += `**__Trade Tixl on__** :\n`;
+        for (let i = 0; i < erc20data.tickers.length; i++) {
+            if (i === erc20data.tickers.length - 1) {
+                embedText += `[${erc20data.tickers[i].market.name}](${erc20data.tickers[i]['trade_url']}) (TXL-${erc20data.tickers[i].target})`;
+            } else {
+                embedText += `[${erc20data.tickers[i].market.name}](${erc20data.tickers[i]['trade_url']}) (TXL-${erc20data.tickers[i].target}), `;
+            }
+        }
+        embedText += '\n\n_Data provider by [Coingecko](https://www.coingecko.com/en)_'
+        message.channel.send({
+            embed: {
+                title: 'Price for TXL (ERC20)',
+                description: embedText,
+            }
+        }).catch((err) => app.logger.error(err));
     }
 };
