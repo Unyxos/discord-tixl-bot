@@ -9,9 +9,6 @@ module.exports = {
     args: true,
     usage: '',
     async execute (message, args) {
-        message.delete().catch((err) => {
-            app.logger.error(err);
-        })
         let feed = await parser.parseURL('https://medium.com/feed/tixlorg');
         let embedContent = '';
         for (let i = 0; i < 5; i++) {

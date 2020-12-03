@@ -5,7 +5,6 @@ const Discord = require('discord.js');
 const logger = require('pino')()
 const client = new Discord.Client();
 const fs = require('fs');
-require('./chains/native');
 require('dotenv').config()
 
 client.login(process.env.DISCORD_BOT_TOKEN);
@@ -45,4 +44,7 @@ client.on('message', function (message) {
 })
 
 module.exports.logger = logger;
+module.exports.Discord = Discord;
 module.exports.priceChannelId = process.env.PRICE_CHANNEL_ID;
+module.exports.infuraProjectId = process.env.INFURA_PROJECT_ID;
+module.exports.infuraProjectSecret = process.env.INFURA_PROJECT_SECRET;
