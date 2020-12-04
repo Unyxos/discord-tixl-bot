@@ -43,7 +43,7 @@ module.exports = {
                 embedText += `[${erc20data.tickers[i].market.name}](${erc20data.tickers[i]['trade_url']}) (TXL-${erc20data.tickers[i].target}), `;
             }
         }
-        embedText += '\n\n_Data provider by [Coingecko](https://www.coingecko.com/en)_'
+        embedText += '\n\n_Data provided by [Coingecko](https://www.coingecko.com/en)_'
         message.channel.send({
             embed: {
                 title: 'Price for TXL (ERC20)',

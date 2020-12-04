@@ -28,6 +28,6 @@ deploy:
   script:
     - docker stop discord-tixl-bot
     - docker rm discord-tixl-bot
-    - docker run -d --restart always --name discord-tixl-bot -e COMMIT_ID=$CI_COMMIT_SHORT_SHA -e DISCORD_TOKEN=$DISCORD_TOKEN -e SENTRY_DSN=$SENTRY_DSN registry.corentincloss.fr/tixl/discord-tixl-bot:$CI_COMMIT_SHORT_SHA
+    - docker run -d --restart always --name discord-tixl-bot -e INFURA_PROJECT_ID=$INFURA_PROJECT_ID -e INFURA_PROJECT_SECRET=$INFURA_PROJECT_SECRET -e PRICE_CHANNEL_ID=$PRICE_CHANNEL_ID -e COMMIT_ID=$CI_COMMIT_SHORT_SHA -e DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN -e SENTRY_DSN=$SENTRY_DSN registry.corentincloss.fr/tixl/discord-tixl-bot:$CI_COMMIT_SHORT_SHA
   tags:
     - docker-shell
