@@ -1,8 +1,10 @@
 FROM alpine
-RUN apk add --update nodejs npm
-ADD main.js /home/
-ADD package.json /home/
-ADD package-lock.json /home/
-RUN cd /home/ && npm install
+RUN apk add --update nodejs npm tzdata
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-CMD ["node", "/home/main.js"]
+WORKDIR /home/
+ADD . .
+RUN npm install
+
+CMD ["node", "main.js"]
