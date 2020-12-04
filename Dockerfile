@@ -5,4 +5,4 @@ ADD package.json /home/
 ADD package-lock.json /home/
 RUN cd /home/ && npm install
 
-CMD ["node", "/home/index.js"]
+CMD ["node", "/home/main.js"]
