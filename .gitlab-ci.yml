@@ -15,7 +15,7 @@ build:
 
   script:
     - docker build -t registry.corentincloss.fr/tixl/discord-tixl-bot:latest -t registry.corentincloss.fr/tixl/discord-tixl-bot:$CI_COMMIT_SHORT_SHA .
-    - docker push registry.corentincloss.fr/tixl/discord-tixl-bot
+    - docker push registry.corentincloss.fr/tixl/discord-tixl-bot --all-tags
   tags:
     - docker-runner
 
