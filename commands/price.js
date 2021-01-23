@@ -1,26 +1,5 @@
 const app = require('../main');
-const bep2 = require('../chains/tixl-bep2');
-const erc20 = require('../chains/tixl-erc20');
-const Discord = require('discord.js');
-
 const axios = require('axios');
-
-async function getMajorCurrenciesPrice() {
-    try {
-        const btcData = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-        const ethData = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT');
-        const bnbData = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT');
-        return {
-            btc: parseFloat(btcData.data.price),
-            eth: parseFloat(ethData.data.price),
-            bnb: parseFloat(bnbData.data.price),
-        };
-    } catch (e) {
-        app.logger.error(e);
-        return e;
-    }
-}
-
 module.exports = {
     name: 'price',
     description: '',
@@ -28,7 +7,29 @@ module.exports = {
     usage: '',
     async execute (message, args) {
         if (message.channel.id !== app.priceChannelId) return message.delete().catch(err => app.logger.error(err));
-        const erc20data = await erc20.getPrice;
+        const {data} = await axios.get('https://api.coingecko.com/api/v3/coins/tixl-new');
+        const erc20data = {
+            tickers: data.tickers,
+            market: {
+                price : {
+                    btc: data['market_data']['current_price'].btc,
+                    eth: data['market_data']['current_price'].eth,
+                    usd: data['market_data']['current_price'].usd,
+                },
+                mcap: {
+                    btc: data['market_data']['market_cap'].btc,
+                    eth: data['market_data']['market_cap'].eth,
+                    usd: data['market_data']['market_cap'].usd,
+                },
+                volume: {
+                    btc: data['market_data']['total_volume'].btc,
+                    eth: data['market_data']['total_volume'].eth,
+                    usd: data['market_data']['total_volume'].usd,
+                },
+                priceChange: data['market_data']['price_change_24h'],
+                priceChangePercentage: data['market_data']['price_change_percentage_24h'],
+            }
+        }
         let embedText = '';
         embedText += `**USD**: $${erc20data.market.price.usd.toFixed(3)} (24h change : ${erc20data.market.priceChangePercentage.toFixed(2)}%)\n`;
         embedText += `**BTC**: ${erc20data.market.price.btc}\n`;
