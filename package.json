@@ -23,7 +23,7 @@
     "@ethersproject/solidity": "^5.0.7",
     "@sentry/node": "^5.12.4",
     "@uniswap/sdk": "^3.0.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "moment": "^2.29.1",
